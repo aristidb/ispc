@@ -10,10 +10,10 @@ default: simple
 .PRECIOUS: objs/simple.h
 
 dirs:
-	/bin/mkdir -p objs/
+	mkdir -p objs/
 
 clean:
-	/bin/rm -rf objs *~ simple
+	rm -rf objs *~ simple
 
 simple: dirs  objs/simple.o objs/simple_ispc.o
 	$(CXX) $(CXXFLAGS) -o $@ objs/simple.o objs/simple_ispc.o

@@ -65,12 +65,12 @@ all: $(EXAMPLE) $(EXAMPLE)-sse4 $(EXAMPLE)-generic16 $(EXAMPLE)-scalar
 .PHONY: dirs clean
 
 dirs:
-	/bin/mkdir -p objs/
+	mkdir -p objs/
 
 objs/%.cpp objs/%.o objs/%.h: dirs
 
 clean:
-	/bin/rm -rf objs *~ $(EXAMPLE) $(EXAMPLE)-sse4 $(EXAMPLE)-generic16 ref test
+	rm -rf objs *~ $(EXAMPLE) $(EXAMPLE)-sse4 $(EXAMPLE)-generic16 ref test
 
 $(EXAMPLE): $(OBJS)
 	$(CXX) $(CXXFLAGS) -o $@ $^ $(LIBS)

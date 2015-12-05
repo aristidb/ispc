@@ -9,10 +9,10 @@ default: ao
 .PHONY: dirs clean
 
 dirs:
-	/bin/mkdir -p objs/
+	mkdir -p objs/
 
 clean:
-	/bin/rm -rf objs *~ ao
+	rm -rf objs *~ ao
 
 ao: objs/ao.o objs/instrument.o objs/ao_instrumented_ispc.o ../tasksys.cpp
 	$(CXX) $(CXXFLAGS) -o $@ $^ -lm -lpthread

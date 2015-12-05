@@ -478,7 +478,7 @@ Target::Target(const char *arch, const char *cpu, const char *isa, bool pic, boo
         }
     }
 
-    if (!strcasecmp(isa, "host")) {
+    if (isa == NULL || !strcasecmp(isa, "host")) {
         isa = lGetSystemISA();
     }
 

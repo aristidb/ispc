@@ -78,8 +78,8 @@ ARM_ENABLED=0
 NVPTX_ENABLED=0
 
 # Add llvm bin to the path so any scripts run will go to the right llvm-config
-LLVM_BIN= $(shell $(LLVM_CONFIG) --bindir)
-export PATH:=$(LLVM_BIN):$(PATH)
+#LLVM_BIN= $(shell $(LLVM_CONFIG) --bindir)
+#export PATH:=$(LLVM_BIN):$(PATH)
 
 ARCH_OS = $(shell uname)
 ifeq ($(ARCH_OS), Darwin)
@@ -117,13 +117,13 @@ ISPC_LIBS=$(shell $(LLVM_CONFIG) --ldflags) $(CLANG_LIBS) $(LLVM_LIBS) \
 	-lpthread
 
 ifeq ($(LLVM_VERSION),LLVM_3_4)
-    ISPC_LIBS += -lcurses
+    ISPC_LIBS += -lncurses
 endif
 
 # There is no logical OR in GNU make. 
 # This 'ifneq' acts like if( !($(LLVM_VERSION) == LLVM_3_2 || $(LLVM_VERSION) == LLVM_3_3 || $(LLVM_VERSION) == LLVM_3_4))
 ifeq (,$(filter $(LLVM_VERSION), LLVM_3_2 LLVM_3_3 LLVM_3_4))
-    ISPC_LIBS += -lcurses -lz
+    ISPC_LIBS += -lncurses -lz
     # This is here because llvm-config fails to report dependency on tinfo library in some case.
     # This is described in LLVM bug 16902.
     ifeq ($(ARCH_OS),Linux)
@@ -237,7 +237,7 @@ depend: llvm_check $(CXX_SRC) $(HEADERS)
 
 dirs:
 	@echo Creating objs/ directory
-	@/bin/mkdir -p objs
+	@mkdir -p objs
 
 llvm_check:
 	@llvm-config --version > /dev/null || \
@@ -253,10 +253,10 @@ print_llvm_src: llvm_check
 	@echo Using compiler to build: `$(CXX) --version | head -1`
 
 clean:
-	/bin/rm -rf objs ispc
+	rm -rf objs ispc
 
 doxygen:
-	/bin/rm -rf docs/doxygen
+	rm -rf docs/doxygen
 	doxygen doxygen.cfg
 
 ispc: print_llvm_src dirs $(OBJS)
